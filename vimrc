@@ -53,10 +53,10 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-" Unmap arrow keys
+" Remap arrow keys
 no <down> <Nop>
-no <left> <Nop>
-no <right> <Nop>
+no <left> :cprevious<CR>
+no <right> :cnext<CR>
 no <up> <Nop>
 no <A-down> ddp
 no <A-up> ddkP
@@ -98,6 +98,7 @@ imap {<Tab> {}<ESC>i<CR><ESC>:<1<CR>O
 nmap <silent> <leader>sv :so ~/.vimrc<CR>
 nmap <silent> <leader>ev :e ~/.vimrc<CR>
 nmap <Space> <PageDown>
+cnoremap *** **/*
 
 " Color
 color custom
