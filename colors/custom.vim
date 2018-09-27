@@ -59,9 +59,9 @@ if &background == "dark"
   let s:visual           = s:lighter_black
   let s:cursor_line      = s:subtle_black
   let s:constant         = s:light_blue
-  let s:comment          = s:light_gray
-  let s:selection        = s:dark_yellow
-  let s:selection_fg     = s:black
+  let s:comment          = s:medium_gray
+  let s:selection        = s:light_gray
+  let s:selection_fg     = s:custom
   let s:ok               = s:light_green
   let s:warning          = s:yellow
   let s:error            = s:light_red
@@ -88,27 +88,27 @@ else
   let s:error            = s:dark_red
 endif
 
-unlet s:black
-unlet s:medium_gray
-unlet s:white
-unlet s:light_black
-unlet s:lighter_black
-unlet s:subtle_black
-unlet s:light_gray
-unlet s:lighter_gray
-unlet s:lightest_gray
-unlet s:dark_red
-unlet s:light_red
-unlet s:dark_blue
-unlet s:light_blue
-unlet s:dark_cyan
-unlet s:light_cyan
-unlet s:dark_green
-unlet s:light_green
-unlet s:dark_purple
-unlet s:light_purple
-unlet s:light_yellow
-unlet s:dark_yellow
+"unlet s:black
+"unlet s:medium_gray
+"unlet s:white
+"unlet s:light_black
+"unlet s:lighter_black
+"unlet s:subtle_black
+"unlet s:light_gray
+"unlet s:lighter_gray
+"unlet s:lightest_gray
+"unlet s:dark_red
+"unlet s:light_red
+"unlet s:dark_blue
+"unlet s:light_blue
+"unlet s:dark_cyan
+"unlet s:light_cyan
+"unlet s:dark_green
+"unlet s:light_green
+"unlet s:dark_purple
+"unlet s:light_purple
+"unlet s:light_yellow
+"unlet s:dark_yellow
 
 " https://github.com/noahfrederick/vim-hemisu/
 function! s:h(group, style)
@@ -157,6 +157,7 @@ hi! link LineNr       Noise
 hi! link CursorLineNr LineNr
 hi! link FoldColumn   LineNr
 hi! link SignColumn   LineNr
+call s:h("LineNr",	  {"fg": s:light_blue, "bg": s:custom})
 
 " __Comment__
 call s:h("Comment",       {"fg": s:comment, "gui": "italic"})
