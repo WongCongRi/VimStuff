@@ -33,6 +33,8 @@ Plugin 'scrooloose/nerdtree.git'
 Plugin 'easymotion/vim-easymotion.git'
 Plugin 'Lokaltog/vim-powerline.git'
 Plugin 'vim-vdebug/vdebug.git'
+Plugin 'zirrostig/vim-schlepp'
+"Plugin 'https://github.com/thoughtstream/Damian-Conway-s-Vim-Setup/blob/master/plugin/hlnext.vim'
 
 " My Colors
 " ===========================
@@ -55,11 +57,17 @@ filetype plugin indent on    " required
 
 " Remap arrow keys
 no <down> <Nop>
-no <left> :cprevious<CR>
-no <right> :cnext<CR>
+no <left> :cprevious<CR>zz
+no <right> :cnext<CR>zz
 no <up> <Nop>
 no <A-down> ddp
 no <A-up> ddkP
+
+" schlepp
+vmap <up>    <Plug>SchleppUp
+vmap <down>  <Plug>SchleppDown
+vmap <left>  <Plug>SchleppLeft
+vmap <right> <Plug>SchleppRight
 
 " Powerline
 set nocompatible   " Disable vi-compatibility
@@ -80,6 +88,7 @@ set path+=**
 set wildmenu
 set showcmd
 set mouse=a
+set incsearch hlsearch ignorecase smartcase
  
 " ========== Custom mappings ===========
 inoremap jj <ESC>
@@ -99,6 +108,16 @@ nmap <silent> <leader>sv :so ~/.vimrc<CR>
 nmap <silent> <leader>ev :e ~/.vimrc<CR>
 nmap <Space> <PageDown>
 cnoremap *** **/*
+nnoremap <silent> ,h :nohls<CR>
+nnoremap v <C-v>
+nnoremap <C-v> v
+
+" Persistent Undo
+if has('persistent_undo')
+    set undolevels=1000
+    set undodir=$HOME/.VIM_UNDO_FILES
+    set undofile
+endif
 
 " Color
 color custom
