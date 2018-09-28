@@ -32,13 +32,11 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'scrooloose/nerdtree.git'
 Plugin 'easymotion/vim-easymotion.git'
 Plugin 'Lokaltog/vim-powerline.git'
-Plugin 'vim-vdebug/vdebug.git'
+"Plugin 'vim-vdebug/vdebug.git'
 Plugin 'zirrostig/vim-schlepp'
 Plugin 'w0rp/ale'
 Plugin 'jceb/vim-hier'
-set runtimepath+=~/.vim/plugin/smartcom.vim
-set runtimepath+=~/.vim/plugin/foldsearches.vim
-set runtimepath+=~/.vim/plugin/hlnext.vim
+Plugin 'wongcongri/vim-stuff'
 
 " My Colors
 " ===========================
@@ -108,7 +106,7 @@ let g:ale_linters              = { 'perl': ['perl'] }
 let g:ale_perl_perl_executable = 'polyperl'
 let g:ale_perl_perl_options    = '-cw -Ilib'
 
-nmap ;m [Toggle automake on Perl files] :call Toggle_ALE()<CR>
+Nmap ;m [Toggle automake on Perl files] :call Toggle_ALE()<CR>
 
 function! Start_ALE ()
     ALEEnable
@@ -132,6 +130,69 @@ function! Toggle_ALE ()
     echo 'Error highlighting ' . (g:ale_enabled ? 'on' : 'off')
 endfunction
 
+" Smartcom
+runtime bundle/vim-stuff/plugin/smartcom.vim
+
+let ANYTHING = ""
+let NOTHING  = ""
+let EOL      = '\s*$'
+
+                " Left     Right      Insert                             Reset cursor
+                " =====    =====      ===============================    ============
+call SmartcomAdd( '<<',    ANYTHING,  "\<BS>\<BS>«"                                    )
+call SmartcomAdd( '>>',    ANYTHING,  "\<BS>\<BS>»"                                    )
+call SmartcomAdd( '?',     ANYTHING,  '?',                               {'restore':1} )
+call SmartcomAdd( '?',     '?',       "\<CR>\<ESC>O\<TAB>"                             )
+call SmartcomAdd( '{{',    ANYTHING,  '}}',                              {'restore':1} )
+call SmartcomAdd( '{{',    '}}',      NOTHING,                                         )
+call SmartcomAdd( 'qr{',   ANYTHING,  '}xms',                            {'restore':1} )
+call SmartcomAdd( 'qr{',   '}xms',    "\<CR>\<C-D>\<ESC>O\<C-D>\<TAB>"                 )
+call SmartcomAdd( 'm{',    ANYTHING,  '}xms',                            {'restore':1} )
+call SmartcomAdd( 'm{',    '}xms',    "\<CR>\<C-D>\<ESC>O\<C-D>\<TAB>",                )
+call SmartcomAdd( 's{',    ANYTHING,  '}{}xms',                          {'restore':1} )
+call SmartcomAdd( 's{',    '}{}xms',  "\<CR>\<C-D>\<ESC>O\<C-D>\<TAB>",                )
+call SmartcomAdd( '\*\*',  ANYTHING,  '**',                              {'restore':1} )
+call SmartcomAdd( '\*\*',  '\*\*',    NOTHING,                                         )
+
+" Handle single : correctly...
+call SmartcomAdd( '^:\|[^:]:',  EOL,  "\<TAB>" )
+
+" In the middle of a keyword: delete the rest of the keyword before completing...
+                " Left     Right                    Insert
+                " =====    =====                    =======================
+call SmartcomAdd( '\k',    '\k\+\%(\k\|\n\)\@!',    "\<C-O>cw\<C-X>\<C-N>",           )
+call SmartcomAdd( '\k',    '\k\+\_$',               "\<C-O>cw\<C-X>\<C-N>",           )
+
+"After an alignable, align...
+function! AlignOnPat (pat)
+    return "\<ESC>:call EQAS_Align('nmap',{'pattern':'" . a:pat . "'})\<CR>A"
+endfunction
+                " Left         Right        Insert
+                " ==========   =====        =============================
+call SmartcomAdd( '=',         ANYTHING,    "\<ESC>:call EQAS_Align('nmap')\<CR>A")
+call SmartcomAdd( '=>',        ANYTHING,    AlignOnPat('=>') )
+call SmartcomAdd( '\s#',       ANYTHING,    AlignOnPat('\%(\S\s*\)\@<= #') )
+call SmartcomAdd( '[''"]\s*:', ANYTHING,    AlignOnPat(':'),                   {'filetype':'vim'} )
+call SmartcomAdd( ':',         ANYTHING,    "\<TAB>",                          {'filetype':'vim'} )
+
+
+                " Left         Right   Insert                                  Where
+                " ==========   =====   =============================           ===================
+" Perl keywords...
+call SmartcomAdd( '^\s*for',   EOL,    " my $___ (___) {\n___\n}\n___",        {'filetype':'perl'} )
+call SmartcomAdd( '^\s*if',    EOL,    " (___) {\n___\n}\n___",                {'filetype':'perl'} )
+call SmartcomAdd( '^\s*while', EOL,    " (___) {\n___\n}\n___",                {'filetype':'perl'} )
+call SmartcomAdd( '^\s*given', EOL,    " (___) {\n___\n}\n___",                {'filetype':'perl'} )
+call SmartcomAdd( '^\s*when',  EOL,    " (___) {\n___\n}\n___",                {'filetype':'perl'} )
+call SmartcomAdd( '^\s*sub',   EOL,    " ___ (___) {\n___\n}\n___",            {'filetype':'perl'} )
+
+
+" Convert between single- and double-quoted string endings...
+call SmartcomAdd(      '''[^"]*"',  NOTHING,  "\<ESC>?'\<CR>:nohlsearch\<CR>r\"a",        {'restore':1+1} )
+call SmartcomAdd( 'q\@<!q{[^"]*"',  NOTHING,  "\<BS>}\<ESC>?q{\<CR>:nohlsearch\<CR>sqq",  {'restore':1+2} )
+call SmartcomAdd(     '"[^'']*''',  NOTHING,  "\<ESC>?\"\<CR>:nohlsearch\<CR>r'a",        {'restore':1+1} )
+call SmartcomAdd(   'qq{[^'']*''',  NOTHING,  "\<BS>}\<ESC>?qq{\<CR>:nohlsearch\<CR>2sq", {'restore':1+1} )
+
 " Vdebug
 if !exists('g:vdebug_options')
 	let g:vdebug_options = {}
@@ -150,7 +211,7 @@ set matchpairs+=<:>
  
 " ========== Custom mappings ===========
 inoremap jj <ESC>
-let mapleader=','
+"let mapleader=','
 nmap <C-Tab> :tabnext<CR>
 nmap <C-S-Tab> :tabprevious<CR>
 nmap <silent> <leader>n :NERDTree<CR>
@@ -166,9 +227,12 @@ nmap <silent> <leader>sv :so ~/.vimrc<CR>
 nmap <silent> <leader>ev :e ~/.vimrc<CR>
 nmap <Space> <PageDown>
 cnoremap *** **/*
-nnoremap <silent> ,h :nohls<CR>
+vnoremap <leader>h :nohls<CR>
 nnoremap v <C-v>
 nnoremap <C-v> v
+
+"Delete in normal mode to switch off highlighting till next search and clear messages...
+Nmap <BS> [Cancel highlighting] :call HLNextOff() <BAR> :nohlsearch <BAR> :call VG_Show_CursorColumn('off')<CR>::HierClear<CR>
 
 " Set default window size
 "if has("gui_running")
@@ -190,6 +254,7 @@ if has('persistent_undo')
 endif
 
 " Color
+set background=dark
 color custom
 
 " ===================================================
