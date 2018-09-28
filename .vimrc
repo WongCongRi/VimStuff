@@ -28,9 +28,10 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 
 " Auto-update this .vimrc file
+" ============================
 augroup VimReload
 autocmd!
-	autocmd BufWritePost $MYVIMRC source $MYVIMRC
+	autocmd BufWritePost $MYVIMRC so ~/.vimrc
 augroup END
 
 " My Plugins
@@ -63,9 +64,25 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
+" custom stuff
+" ===========================
+set relativenumber
+set number
+set cursorline
+set path+=**
+set wildmenu
+set showcmd
+set incsearch hlsearch ignorecase smartcase
+set matchpairs+=<:>
+
+" Initialize plugins
+" ===========================
 runtime bundle/vim-stuff/plugin/documap.vim
+runtime bundle/vim-stuff/plugin/foldsearches.vim
+runtime bundle/vim-stuff/plugin/hlnext.vim
 
 " Remap arrow keys
+" ===========================
 no <down> <Nop>
 no <left> :cprevious<CR>zz
 no <right> :cnext<CR>zz
@@ -74,17 +91,20 @@ no <A-down> ddp
 no <A-up> ddkP
 
 " schlepp
+" ===========================
 vmap <up>    <Plug>SchleppUp
 vmap <down>  <Plug>SchleppDown
 vmap <left>  <Plug>SchleppLeft
 vmap <right> <Plug>SchleppRight
 
 " Powerline
+" ===========================
 set nocompatible   " Disable vi-compatibility
 set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show Unicode glyphs
  
 " vim-hier
+" ===========================
 highlight HierError    ctermfg=red     cterm=bold
 highlight HierWarning  ctermfg=magenta cterm=bold
 
@@ -96,6 +116,7 @@ let g:hier_highlight_group_locw = 'HierWarning'
 let g:hier_highlight_group_loci = 'Normal'
 
 " ALE
+" ===========================
 highlight AleError    ctermfg=red     cterm=bold
 highlight AleWarning  ctermfg=magenta cterm=bold
 
@@ -122,7 +143,7 @@ function! Start_ALE ()
 endfunction
 
 function! Stop_ALE ()
-    silent call s:ChangeProfile(&filetype)
+"   silent call s:ChangeProfile(&filetype)
     ALEDisable
     HierStop
     call setqflist([])
@@ -206,16 +227,6 @@ if !exists('g:vdebug_options')
 	let g:vdebug_options = {}
 endif
 let g:vdebug_options.port = 9001
-
-" Custom stuff
-set relativenumber
-set number
-set cursorline
-set path+=**
-set wildmenu
-set showcmd
-set incsearch hlsearch ignorecase smartcase
-set matchpairs+=<:>
  
 " ========== Custom mappings ===========
 inoremap jj <ESC>
@@ -232,14 +243,14 @@ imap <leader>" ""<ESC>i
 imap <leader>' ()<ESC>i
 imap {<Tab> {}<ESC>i<CR><ESC>:<1<CR>O
 nmap <silent> <leader>sv :so ~/.vimrc<CR>
-Nmap ;v [Edit.vimrc] :next $MYVIMRC<CR>
+Nmap ;v [Edit .vimrc] :next $MYVIMRC<CR>
 nmap <Space> <PageDown>
 cnoremap *** **/*
-vnoremap <leader>h :nohls<CR>
 nnoremap v <C-v>
 nnoremap <C-v> v
 
-"Delete in normal mode to switch off highlighting till next search and clear messages...
+" Delete in normal mode to switch off highlighting till next search and clear messages...
+" ===========================
 "Nmap <silent> <BS> [Cancel highlighting] :call HLNextOff() <BAR> :nohlsearch <BAR> :call VG_Show_CursorColumn('off')<CR>::HierClear<CR>
 Nmap <silent> <BS> [Cancel highlighting] :call HLNextOff() <BAR> :nohlsearch <CR>::HierClear<CR>
 
@@ -256,6 +267,7 @@ Nmap <silent> <BS> [Cancel highlighting] :call HLNextOff() <BAR> :nohlsearch <CR
 "endif
 
 " Persistent Undo
+" ===========================
 if has('persistent_undo')
     set undolevels=1000
     set undodir=$HOME/.VIM_UNDO_FILES
@@ -263,6 +275,7 @@ if has('persistent_undo')
 endif
 
 " Color
+" ===========================
 set background=dark
 color custom
 
