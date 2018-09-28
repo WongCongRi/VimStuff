@@ -60,7 +60,7 @@ if &background == "dark"
   let s:visual           = s:lighter_black
   let s:cursor_line      = s:subtle_black
   let s:constant         = s:light_blue
-  let s:comment          = s:medium_gray
+  let s:comment          = s:white
   let s:selection        = s:light_gray
   let s:selection_fg     = s:custom
   let s:ok               = s:light_green
