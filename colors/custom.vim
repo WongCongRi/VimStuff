@@ -42,16 +42,21 @@ let s:light_purple    = { "gui": "#6855DE", "cterm": "13"  }
 let s:light_yellow    = { "gui": "#F3E430", "cterm": "11"  }
 let s:dark_yellow     = { "gui": "#A89C14", "cterm": "3"   }
 
-let s:custom	      = { "gui": "#121212", "cterm": "233" }
-let s:none 	      = {}
+let s:subtle_white    = { "gui": "#E6E6E6", "cterm": "254"  }
+let s:custom          = { "gui": "#121212", "cterm": "233" }
+let s:none            = {}
+
+" test
+" wow what kind of color is this
+
 
 if &background == "dark"
   let s:bg               = s:custom
   let s:bg_subtle        = s:light_black
   let s:bg_very_subtle   = s:subtle_black
-  let s:norm             = s:lighter_gray
-  let s:norm_subtle      = s:light_gray
-  let s:norm_very_subtle = s:medium_gray
+  let s:norm             = s:subtle_white
+  let s:norm_subtle      = s:lighter_gray
+  let s:norm_very_subtle = s:light_gray
   let s:purple           = s:light_purple
   let s:cyan             = s:light_cyan
   let s:green            = s:light_green
@@ -60,7 +65,7 @@ if &background == "dark"
   let s:visual           = s:lighter_black
   let s:cursor_line      = s:subtle_black
   let s:constant         = s:light_blue
-  let s:comment          = s:white
+  let s:comment          = s:light_gray
   let s:selection        = s:light_gray
   let s:selection_fg     = s:custom
   let s:ok               = s:light_green
