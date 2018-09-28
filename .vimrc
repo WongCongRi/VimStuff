@@ -27,6 +27,12 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 
+" Auto-update this .vimrc file
+augroup VimReload
+autocmd!
+	autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
+
 " My Plugins
 " ============================
 Plugin 'scrooloose/nerdtree.git'
@@ -56,6 +62,8 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+
+runtime bundle/vim-stuff/plugin/documap.vim
 
 " Remap arrow keys
 no <down> <Nop>
@@ -224,7 +232,7 @@ imap <leader>" ""<ESC>i
 imap <leader>' ()<ESC>i
 imap {<Tab> {}<ESC>i<CR><ESC>:<1<CR>O
 nmap <silent> <leader>sv :so ~/.vimrc<CR>
-nmap <silent> <leader>ev :e ~/.vimrc<CR>
+Nmap ;v [Edit.vimrc] :next $MYVIMRC<CR>
 nmap <Space> <PageDown>
 cnoremap *** **/*
 vnoremap <leader>h :nohls<CR>
@@ -232,7 +240,8 @@ nnoremap v <C-v>
 nnoremap <C-v> v
 
 "Delete in normal mode to switch off highlighting till next search and clear messages...
-Nmap <BS> [Cancel highlighting] :call HLNextOff() <BAR> :nohlsearch <BAR> :call VG_Show_CursorColumn('off')<CR>::HierClear<CR>
+"Nmap <silent> <BS> [Cancel highlighting] :call HLNextOff() <BAR> :nohlsearch <BAR> :call VG_Show_CursorColumn('off')<CR>::HierClear<CR>
+Nmap <silent> <BS> [Cancel highlighting] :call HLNextOff() <BAR> :nohlsearch <CR>::HierClear<CR>
 
 " Set default window size
 "if has("gui_running")
