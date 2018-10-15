@@ -75,27 +75,32 @@ set showcmd
 set incsearch hlsearch ignorecase smartcase
 set matchpairs+=<:>
 
+" Remap arrow keys
+" ===========================
+nnoremap <down> <Nop>
+nnoremap <left>  :cprevious<CR>zz
+nnoremap <right> :cnext<CR>zz
+nnoremap <up> <Nop>
+nnoremap <A-down> ddp
+nnoremap <A-up> ddkP
+
+" Color
+" ===========================
+set background=dark
+color custom
+
 " Initialize plugins
 " ===========================
 runtime bundle/vim-stuff/plugin/documap.vim
-runtime bundle/vim-stuff/plugin/foldsearches.vim
 runtime bundle/vim-stuff/plugin/hlnext.vim
-
-" Remap arrow keys
-" ===========================
-no <down> <Nop>
-no <left> :cprevious<CR>zz
-no <right> :cnext<CR>zz
-no <up> <Nop>
-no <A-down> ddp
-no <A-up> ddkP
+"runtime bundle/vim-stuff/plugin/foldsearches.vim
 
 " schlepp
 " ===========================
-vmap <up>    <Plug>SchleppUp
-vmap <down>  <Plug>SchleppDown
-vmap <left>  <Plug>SchleppLeft
-vmap <right> <Plug>SchleppRight
+vnoremap <up>    <Plug>SchleppUp
+vnoremap <down>  <Plug>SchleppDown
+vnoremap <left>  <Plug>SchleppLeft
+vnoremap <right> <Plug>SchleppRight
 
 " Powerline
 " ===========================
@@ -105,9 +110,6 @@ set encoding=utf-8 " Necessary to show Unicode glyphs
  
 " vim-hier
 " ===========================
-highlight HierError    ctermfg=red     cterm=bold
-highlight HierWarning  ctermfg=magenta cterm=bold
-
 let g:hier_highlight_group_qf  = 'HierError'
 let g:hier_highlight_group_qfw = 'HierWarning'
 
@@ -115,10 +117,13 @@ let g:hier_highlight_group_loc  = 'Normal'
 let g:hier_highlight_group_locw = 'HierWarning'
 let g:hier_highlight_group_loci = 'Normal'
 
+highlight HierError    ctermfg=33    cterm=bold guifg=#0087ff
+highlight HierWarning  ctermfg=magenta cterm=bold guifg=#ff00ff
+
 " ALE
 " ===========================
-highlight AleError    ctermfg=red     cterm=bold
-highlight AleWarning  ctermfg=magenta cterm=bold
+highlight AleError    ctermfg=red cterm=bold guifg=#ff0000
+highlight AleWarning  ctermfg=magenta cterm=bold guifg=#ff00ff
 
 augroup ALE_Autoconfig
     au!
@@ -129,10 +134,11 @@ augroup ALE_Autoconfig
 augroup END
 
 let g:ale_set_loclist          = 0
-let g:ale_set_quickfix         = 1
-let g:ale_set_signs            = 0
-let g:ale_linters              = { 'perl': ['perl'] }
-let g:ale_perl_perl_executable = 'polyperl'
+"let g:ale_set_quickfix         = 1
+"let g:ale_set_signs            = 0
+let g:ale_linters              = { 'perl' : ['perl'] }
+let g:ale_linters              = { 'php': ['php'] }
+"let g:ale_perl_perl_executable = 'polyperl'
 let g:ale_perl_perl_options    = '-cw -Ilib'
 
 Nmap ;m [Toggle automake on Perl files] :call Toggle_ALE()<CR>
@@ -229,8 +235,8 @@ endif
 let g:vdebug_options.port = 9001
  
 " ========== Custom mappings ===========
-inoremap jj <ESC>
 "let mapleader=','
+inoremap jj <ESC>
 nmap <C-Tab> :tabnext<CR>
 nmap <C-S-Tab> :tabprevious<CR>
 nmap <silent> <leader>n :NERDTree<CR>
@@ -273,10 +279,5 @@ if has('persistent_undo')
     set undodir=$HOME/.VIM_UNDO_FILES
     set undofile
 endif
-
-" Color
-" ===========================
-set background=dark
-color custom
 
 " ===================================================
