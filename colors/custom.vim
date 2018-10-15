@@ -43,6 +43,7 @@ let s:light_yellow    = { "gui": "#F3E430", "cterm": "11"  }
 let s:dark_yellow     = { "gui": "#A89C14", "cterm": "3"   }
 
 let s:subtle_white    = { "gui": "#E6E6E6", "cterm": "254"  }
+let s:custom_blue      = { "gui": "#99CCFF", "cterm": "153" }
 let s:custom          = { "gui": "#121212", "cterm": "233" }
 let s:none            = {}
 
