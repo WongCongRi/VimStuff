@@ -248,12 +248,14 @@ imap <leader>' ''<ESC>i
 imap <leader>" ""<ESC>i
 imap <leader>' ()<ESC>i
 imap {<Tab> {}<ESC>i<CR><ESC>:<1<CR>O
-nmap <silent> <leader>sv :so ~/.vimrc<CR>
+Nmap ;l [Reload .vimrc] :so ~/.vimrc<CR>
 Nmap ;v [Edit .vimrc] :next $MYVIMRC<CR>
 nmap <Space> <PageDown>
 cnoremap *** **/*
 nnoremap v <C-v>
 nnoremap <C-v> v
+Nmap ;g [Grep under word] :vim /<C-R><C-W>/ **/*<CR>
+Nmap ;G [Grep under word with edit] :vim /<C-R><C-W>/ **/*
 
 " Delete in normal mode to switch off highlighting till next search and clear messages...
 " ===========================
