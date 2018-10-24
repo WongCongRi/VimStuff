@@ -239,7 +239,7 @@ let g:vdebug_options.port = 9001
 inoremap jj <ESC>
 nmap <C-Tab> :tabnext<CR>
 nmap <C-S-Tab> :tabprevious<CR>
-nmap <silent> <leader>n :NERDTree<CR>
+Nmap ;n [Open NERDTree] :NERDTree<CR>
 nmap go o<ESC>k
 nmap g<S-o> O<ESC>j
 nmap n nzz
